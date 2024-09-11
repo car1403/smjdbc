@@ -5,13 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+public class Main3 {
     public static void main(String[] args) {
         // 1. MySQL JDBC Driver Loading
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found");
             System.out.println(e.getMessage());
@@ -31,18 +29,19 @@ public class Main {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
         // 3. SQL
-        String insertSql = "INSERT INTO cust VALUES(?,?,?)";
+        String updateSql =
+                "UPDATE cust SET pwd=?, name=? WHERE id=?";
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement(insertSql);
-            ps.setString(1, "id05");
-            ps.setString(2, "pwd05");
-            ps.setString(3, "홍말숙");
+            ps = conn.prepareStatement(updateSql);
+            ps.setString(1, "pwd22");
+            ps.setString(2, "고진주");
+            ps.setString(3, "id22");
+
             int result = ps.executeUpdate();
             System.out.println(result);
-            System.out.println("Inserted rows into database");
+            System.out.println("Updated rows into database");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -61,7 +60,5 @@ public class Main {
                 }
             }
         }
-
-        // 4. Close
     }
 }
