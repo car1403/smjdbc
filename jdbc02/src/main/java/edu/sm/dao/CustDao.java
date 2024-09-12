@@ -30,12 +30,42 @@ public class CustDao implements Dao<String, Cust> {
 
     @Override
     public Cust update(Cust cust, Connection con) throws Exception {
-        return null;
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(Sql.updateCust);
+            ps.setString(1, cust.getPwd());
+            ps.setString(2, cust.getName());
+            ps.setString(3, cust.getId());
+            ps.executeUpdate();
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            if(ps != null){
+                ps.close();
+            }
+        }
+        return cust;
     }
 
     @Override
-    public Boolean delete(Cust cust, Connection con) throws Exception {
-        return null;
+    public Boolean delete(String s, Connection con) throws Exception {
+        Boolean b = false;
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(Sql.deleteCust);
+            ps.setString(1, s);
+            int result = ps.executeUpdate();
+            if(result == 1){
+                b = true;
+            }
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            if(ps != null){
+                ps.close();
+            }
+        }
+        return b;
     }
 
     @Override

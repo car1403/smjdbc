@@ -40,12 +40,31 @@ public class CustService implements MService<String, Cust> {
 
     @Override
     public Cust modify(Cust cust) throws Exception {
-        return null;
+        Connection con = cp.getConnection();
+        try {
+            dao.update(cust, con);
+            System.out.println("Send SMS to:" + cust.getId());
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            cp.releaseConnection(con);
+        }
+        return cust;
     }
 
     @Override
-    public Boolean remove(Cust cust) throws Exception {
-        return null;
+    public Boolean remove(String s ) throws Exception {
+        Connection con = cp.getConnection();
+        Boolean result = false;
+        try {
+            result = dao.delete(s, con);
+            System.out.println("Send SMS to:" + s);
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            cp.releaseConnection(con);
+        }
+        return result;
     }
 
     @Override

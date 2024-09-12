@@ -3,17 +3,13 @@ package edu.sm.cust;
 import edu.sm.dto.Cust;
 import edu.sm.service.CustService;
 
-public class CustInsert {
+public class CustDelete {
     public static void main(String[] args) {
         CustService custService = new CustService();
-        Cust cust = Cust.builder()
-                .id("id89")
-                .pwd("pwd88")
-                .name("이말자")
-                .build();
+        String id = "id88";
 
         try {
-            custService.add(cust);
+            custService.remove(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
