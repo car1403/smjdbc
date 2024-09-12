@@ -26,14 +26,15 @@ public class CustService implements MService<String, Cust> {
     }
 
     @Override
-    public Cust add(Cust cust) throws DuplicatedIdException,Exception {
+    public Cust add(Cust cust) throws Exception {
         Connection con = cp.getConnection();
         try {
+            con.setAutoCommit(false);
             dao.insert(cust, con);
             System.out.println("Send SMS to:" + cust.getId());
-        }catch(DuplicatedIdException e){
-            throw e;
+            con.commit();
         }catch(Exception e) {
+            con.rollback();
             throw e;
         }finally {
             cp.releaseConnection(con);

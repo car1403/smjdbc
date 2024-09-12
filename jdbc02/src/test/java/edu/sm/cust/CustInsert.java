@@ -8,8 +8,8 @@ public class CustInsert {
     public static void main(String[] args) {
         CustService custService = new CustService();
         Cust cust = Cust.builder()
-                .id("id99")
-                .pwd("pwd99")
+                .id("id66")
+                .pwd("pwd66")
                 .name("이말자")
                 .build();
         try {

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CustDao implements Dao<String, Cust> {
     @Override
-    public Cust insert(Cust cust, Connection con) throws DuplicatedIdException, Exception {
+    public Cust insert(Cust cust, Connection con) throws Exception {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(Sql.insertCust);
