@@ -73,11 +73,29 @@ public class CustService implements MService<String, Cust> {
 
     @Override
     public Cust get(String s) throws Exception {
-        return null;
+        Connection con = cp.getConnection();
+        Cust result = null;
+        try {
+            result = dao.select(s, con);
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            cp.releaseConnection(con);
+        }
+        return result;
     }
 
     @Override
     public List<Cust> get() throws Exception {
-        return List.of();
+        Connection con = cp.getConnection();
+        List<Cust> result = null;
+        try {
+            result = dao.select(con);
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            cp.releaseConnection(con);
+        }
+        return result;
     }
 }
