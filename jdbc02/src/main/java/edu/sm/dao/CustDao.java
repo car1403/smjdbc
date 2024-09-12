@@ -1,16 +1,18 @@
 package edu.sm.dao;
 
 import edu.sm.dto.Cust;
+import edu.sm.exception.DuplicatedIdException;
 import edu.sm.frame.Dao;
 import edu.sm.frame.Sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class CustDao implements Dao<String, Cust> {
     @Override
-    public Cust insert(Cust cust, Connection con) throws Exception {
+    public Cust insert(Cust cust, Connection con) throws DuplicatedIdException, Exception {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(Sql.insertCust);
@@ -18,6 +20,8 @@ public class CustDao implements Dao<String, Cust> {
             ps.setString(2, cust.getPwd());
             ps.setString(3, cust.getName());
             ps.executeUpdate();
+        }catch(SQLIntegrityConstraintViolationException e) {
+            throw new DuplicatedIdException("EX0001");
         }catch(Exception e) {
             throw e;
         }finally {

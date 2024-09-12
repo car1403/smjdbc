@@ -2,6 +2,7 @@ package edu.sm.service;
 
 import edu.sm.dao.CustDao;
 import edu.sm.dto.Cust;
+import edu.sm.exception.DuplicatedIdException;
 import edu.sm.frame.ConnectionPool;
 import edu.sm.frame.Dao;
 import edu.sm.frame.MService;
@@ -25,11 +26,13 @@ public class CustService implements MService<String, Cust> {
     }
 
     @Override
-    public Cust add(Cust cust) throws Exception {
+    public Cust add(Cust cust) throws DuplicatedIdException,Exception {
         Connection con = cp.getConnection();
         try {
             dao.insert(cust, con);
             System.out.println("Send SMS to:" + cust.getId());
+        }catch(DuplicatedIdException e){
+            throw e;
         }catch(Exception e) {
             throw e;
         }finally {
